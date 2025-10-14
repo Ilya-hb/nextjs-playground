@@ -15,7 +15,7 @@ export default function WeatherDetails(props: WeatherDetailsProps) {
   const maxTemp = kelvinToCelcius(props.tempMax);
   const feelsLike = kelvinToCelcius(props.feelsLike);
   return (
-    <div className="bg-white rounded-lg  border">
+    <div className="bg-white rounded-b-xl  border">
       <div className="grid grid-cols-2 divide-x divide-y divide-gray-200">
         <WeatherDetailsItem
           label="Feels like"

@@ -3,26 +3,31 @@ import React, { useState } from "react";
 import { Input } from "./input";
 import { Button } from "./button";
 import { Search as SearchIcon } from "lucide-react";
+import { useWeather } from "../context/weather-context";
 
 export default function Search() {
   const [search, setSearch] = useState("");
+  const { searchCity, loading, error } = useWeather();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    searchCity(search);
+  };
 
   return (
     <div className="relative">
       <Input
         placeholder="Enter your city"
+        value={search}
         onChange={(e) => handleInputChange(e)}
       />
       <Button
         variant={"outline"}
         className="absolute right-0 "
-        onSubmit={handleSubmit}
+        onClick={handleSubmit}
       >
         Search
         <SearchIcon />

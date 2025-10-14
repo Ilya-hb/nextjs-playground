@@ -1,4 +1,4 @@
-export interface CityWeather {
+export interface WeatherData {
   coord: {
     lon: number;
     lat: number;
@@ -30,7 +30,7 @@ export interface CityWeather {
   name: string;
 }
 
-export interface Geocode {
+export interface GeocodeData {
   name: string;
   lat: number;
   lon: number;

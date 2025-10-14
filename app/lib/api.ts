@@ -1,7 +1,6 @@
-import { CityWeather, Geocode } from "../types/types";
-
+import type { WeatherData } from "../types/types";
 const BASE_URL = "https://api.openweathermap.org/data/2.5/";
-const GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/";
+// const GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/";
 // export function getUsersGeo() {
 //   const options = {
 //     enableHighAccuracy: true,
@@ -22,6 +21,22 @@ const GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/";
 //   return result;
 // }
 
+export async function getWeather(city: string) {
+  try {
+    const res = await fetch(
+      BASE_URL +
+        "weather?q=" +
+        city +
+        "&appid=" +
+        process.env.NEXT_PUBLIC_OPENWEATHER_API
+    );
+    const data: WeatherData = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getDefaultWeather() {
   try {
     const res = await fetch(
@@ -30,25 +45,26 @@ export async function getDefaultWeather() {
         process.env.NEXT_PUBLIC_OPENWEATHER_API,
       { next: { revalidate: 86400 } }
     );
-    const data: CityWeather = await res.json();
+    const data: WeatherData = await res.json();
     return data;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getCoordsByName(q: string) {
-  try {
-    const res = await fetch(
-      GEOCODE_URL +
-        "direct?q=" +
-        q +
-        "&limit=3&appid=" +
-        process.env.NEXT_PUBLIC_OPENWEATHER_API
-    );
-    const data: Geocode = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
+// export async function getCoordsByName(q: string) {
+//   try {
+//     const res = await fetch(
+//       GEOCODE_URL +
+//         "direct?q=" +
+//         q +
+//         "&limit=3&appid=" +
+//         process.env.NEXT_PUBLIC_OPENWEATHER_API
+//     );
+//     const data: GeocodeData[] = await res.json();
+//     const { name, lat, lon } = data[0];
+//     return { name, lat, lon };
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
