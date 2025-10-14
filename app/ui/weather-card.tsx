@@ -3,7 +3,7 @@ import { kelvinToCelcius } from "../lib/utils";
 import CelsiusIcon from "../../public/celsius.png";
 import Image from "next/image";
 import WeatherDetails from "./weather-details";
-import { WeatherData } from "../types/types";
+import { ErrorMessage, WeatherData } from "../types/types";
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -16,7 +16,7 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 
 interface WeatherCardProps {
   weather: WeatherData | null;
-  error: string | null;
+  error: ErrorMessage | null;
   loading: boolean;
 }
 
@@ -28,7 +28,9 @@ export default function WeatherCard({
   if (!weather) {
     return <p>Loading...</p>;
   }
+
   const currentDate = new Date().toLocaleString("en-GB", dateOptions);
+
   const celcius = kelvinToCelcius(weather.main.temp);
   const iconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`;
 

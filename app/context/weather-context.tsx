@@ -1,26 +1,18 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { WeatherData } from "../types/types";
+import {
+  CachedData,
+  ErrorMessage,
+  WeatherContextType,
+  WeatherData,
+} from "../types/types";
 import { getWeather } from "../lib/api";
-
-interface WeatherContextType {
-  weather: WeatherData | null;
-  searchCity: (city: string) => Promise<void>;
-  loading: boolean;
-  error: string | null;
-}
-
-interface CachedData {
-  weather: WeatherData;
-  timestamp: number;
-  expiresIn: number;
-}
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
 export function WeatherProvider({ children }: { children: React.ReactNode }) {
   const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ErrorMessage | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -43,17 +35,21 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     if (!city.trim()) return;
     try {
-      const data = await getWeather(city);
-      if (data) {
-        setWeather(data);
-        writeCache(data);
-      }
+      const res = await getWeather(city);
+      if (res)
+        if ("weather" in res) {
+          setWeather(res);
+          writeCache(res);
+        } else {
+          setError(res);
+          console.log(res);
+        }
     } catch (error) {
       const message =
         error instanceof Error
           ? error.message
           : "Unknown error while fetchin weather";
-      setError(message);
+      console.log(message);
     }
     setLoading(false);
   };
@@ -72,7 +68,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem("cache");
         searchCity("Kiev");
       }
-    }
+    } else searchCity("Kiev");
   };
 
   return (

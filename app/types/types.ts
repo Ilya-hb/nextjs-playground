@@ -30,8 +30,20 @@ export interface WeatherData {
   name: string;
 }
 
-export interface GeocodeData {
-  name: string;
-  lat: number;
-  lon: number;
+export interface WeatherContextType {
+  weather: WeatherData | null;
+  searchCity: (city: string) => Promise<void>;
+  loading: boolean;
+  error: ErrorMessage | null;
+}
+
+export interface ErrorMessage {
+  cod: string;
+  message: string;
+}
+
+export interface CachedData {
+  weather: WeatherData;
+  timestamp: number;
+  expiresIn: number;
 }
