@@ -4,7 +4,6 @@ import { Input } from "../input";
 import { Button } from "../button";
 import { Search as SearchIcon } from "lucide-react";
 import { useWeather } from "../../context/weather-context";
-import { toast } from "sonner";
 
 export default function WeatherSearch() {
   const [search, setSearch] = useState("");
@@ -25,6 +24,7 @@ export default function WeatherSearch() {
   return (
     <div className="relative">
       <Input
+        type="text"
         placeholder="Enter your city"
         value={search}
         onChange={(e) => handleInputChange(e)}

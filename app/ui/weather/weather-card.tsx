@@ -4,6 +4,7 @@ import Image from "next/image";
 import { kelvinToCelcius } from "@/app/lib/utils";
 import WeatherDetails from "./weather-details";
 import type { ErrorMessage, WeatherData } from "@/app/types/types";
+import WeatherCardSkeleton from "./weather-card-skeleton";
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -25,8 +26,9 @@ export default function WeatherCard({
   error,
   loading,
 }: WeatherCardProps) {
+  console.log(loading);
   if (!weather) {
-    return <p>Loading...</p>;
+    return <WeatherCardSkeleton />;
   }
 
   const currentDate = new Date().toLocaleString("en-GB", dateOptions);

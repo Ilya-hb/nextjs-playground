@@ -64,7 +64,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
         Date.now() - cachedWeather.timestamp < cachedWeather.expiresIn;
       if (isCacheValid) {
         console.log("Cache got: ", cachedWeather.weather);
-        setWeather(cachedWeather.weather);
+        setTimeout(() => setWeather(cachedWeather.weather), 3000); // for skeleton testing, remove in prod
       } else {
         console.log("Cache is old, fetching new data");
         localStorage.removeItem("cache");
