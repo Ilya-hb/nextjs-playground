@@ -1,13 +1,17 @@
 "use client";
 import { useWeather } from "./context/weather-context";
 import { Header } from "./ui/header";
-import Search from "./ui/search";
-import WeatherCard from "./ui/weather-card";
+import WeatherCard from "./ui/weather/weather-card";
 import { toast } from "sonner";
+import WeatherSearch from "./ui/weather/weather-search";
+import { useEffect } from "react";
 
 export default function Home() {
   const { weather, loading, error } = useWeather();
-  if (error) toast.error(`Error: ${error.message}`);
+
+  useEffect(() => {
+    if (error) toast.error(`Error: ${error.message}`);
+  }, [error]);
   return (
     <>
       <Header />
@@ -16,7 +20,7 @@ export default function Home() {
           <h1 className="text-4xl mt-20">
             <strong>Next-gen</strong> Weather
           </h1>
-          <Search />
+          <WeatherSearch />
 
           <WeatherCard
             weather={weather}

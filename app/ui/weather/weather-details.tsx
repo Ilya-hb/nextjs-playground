@@ -1,5 +1,5 @@
-import { kelvinToCelcius } from "../lib/utils";
 import WeatherDetailsItem from "./weather-details-item";
+import { kelvinToCelcius } from "@/app/lib/utils";
 
 interface WeatherDetailsProps {
   feelsLike: number;

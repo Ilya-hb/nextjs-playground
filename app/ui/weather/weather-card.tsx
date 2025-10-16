@@ -1,9 +1,9 @@
 import React from "react";
-import { kelvinToCelcius } from "../lib/utils";
-import CelsiusIcon from "../../public/celsius.png";
+import CelsiusIcon from "../../../public/celsius.png";
 import Image from "next/image";
+import { kelvinToCelcius } from "@/app/lib/utils";
 import WeatherDetails from "./weather-details";
-import { ErrorMessage, WeatherData } from "../types/types";
+import type { ErrorMessage, WeatherData } from "@/app/types/types";
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   weekday: "long",
@@ -30,13 +30,12 @@ export default function WeatherCard({
   }
 
   const currentDate = new Date().toLocaleString("en-GB", dateOptions);
-
   const celcius = kelvinToCelcius(weather.main.temp);
   const iconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`;
 
   return (
     <>
-      <div className="px-5 py-2 border-1 rounded-sm">
+      <div className="px-5 py-2 border-1 rounded-sm bg-gray-50">
         <div className="flex w-full items-center justify-between">
           <p className="font-light text-3xl">{weather.name}</p>
           <h2 className="text-neutral-400">{currentDate}</h2>

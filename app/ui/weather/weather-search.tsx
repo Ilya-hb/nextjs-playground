@@ -1,13 +1,18 @@
 "use client";
-import React, { useState } from "react";
-import { Input } from "./input";
-import { Button } from "./button";
+import React, { useEffect, useState } from "react";
+import { Input } from "../input";
+import { Button } from "../button";
 import { Search as SearchIcon } from "lucide-react";
-import { useWeather } from "../context/weather-context";
+import { useWeather } from "../../context/weather-context";
+import { toast } from "sonner";
 
-export default function Search() {
+export default function WeatherSearch() {
   const [search, setSearch] = useState("");
   const { searchCity, loading, error } = useWeather();
+
+  useEffect(() => {
+    setSearch("");
+  }, [error]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -23,6 +28,9 @@ export default function Search() {
         placeholder="Enter your city"
         value={search}
         onChange={(e) => handleInputChange(e)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSubmit();
+        }}
       />
       <Button
         variant={"outline"}

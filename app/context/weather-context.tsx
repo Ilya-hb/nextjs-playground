@@ -7,6 +7,7 @@ import {
   WeatherData,
 } from "../types/types";
 import { getWeather } from "../lib/api";
+import { toast } from "sonner";
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
@@ -42,6 +43,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
           writeCache(res);
         } else {
           setError(res);
+          toast.error(`Error: ${res.message}`);
           console.log(res);
         }
     } catch (error) {
