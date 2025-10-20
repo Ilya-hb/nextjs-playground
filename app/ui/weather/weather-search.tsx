@@ -4,10 +4,12 @@ import { Input } from "../input";
 import { Button } from "../button";
 import { Search as SearchIcon } from "lucide-react";
 import { useWeather } from "../../context/weather-context";
+import { WeatherData } from "@/app/types/types";
+import { getHourlyForecast } from "@/app/lib/api";
 
 export default function WeatherSearch() {
   const [search, setSearch] = useState("");
-  const { searchCity, loading, error } = useWeather();
+  const { searchCity, error, weather } = useWeather();
 
   useEffect(() => {
     setSearch("");
@@ -17,9 +19,13 @@ export default function WeatherSearch() {
     setSearch(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     searchCity(search);
   };
+
+  // const handleGetForecast = async (currentWeather: WeatherData) => {
+  //   await getHourlyForecast(currentWeather);
+  // };
 
   return (
     <div className="relative">
@@ -40,6 +46,14 @@ export default function WeatherSearch() {
         Search
         <SearchIcon />
       </Button>
+      {/* <Button
+        variant={"default"}
+        onClick={() => {
+          if (weather) handleGetForecast(weather);
+        }}
+      >
+        get hourly forecast
+      </Button> */}
     </div>
   );
 }

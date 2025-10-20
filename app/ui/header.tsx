@@ -17,8 +17,8 @@ export function Header() {
             </Link>
           </li>
           <li>
-            <Link href={"/"}>
-              <Button variant={"link"}>Account</Button>
+            <Link href={"/pagination"}>
+              <Button variant={"link"}>Pagination</Button>
             </Link>
           </li>
           <li>
